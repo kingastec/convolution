@@ -24,3 +24,6 @@ Splot zadanych dwóch sygnałów zapisanych w formie plików tekstowych (.csv) +
 `chmod +x run.sh`
 
 `./run.sh`
+
+# 
+Przetestowano na Debian 11 z X Window System.
