@@ -134,9 +134,9 @@ class MyWindow(QWidget):
             if not self.iff1 or not self.iff2:
                 raise Exception("Not enough signals")
             else:
-                conv = convolution(self.sig1, self.sig2, self.canal1, self.canal2)
+                self.conv = convolution(self.sig1, self.sig2, self.canal1, self.canal2)
                 self.ax3.clear()
-                self.ax3.plot(conv)
+                self.ax3.plot(self.conv)
                 self.ax3.set_title(f'Convolution for signal 1: {self.fileName1.split("/")[-1]}; channel {self.canal1} '
                                    f'and signal 2: {self.fileName2.split("/")[-1]}; channel {self.canal2}')
                 self.canvas3.draw()
@@ -169,9 +169,12 @@ class MyWindow(QWidget):
     # save canvas to file
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        result_file, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "", "PNG Files (*.png)",
+        result_file, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "", "CSV Files (*.csv)",
                                                     options=options)
-        self.fig3.savefig(result_file)
+        if result_file:
+            with open(result_file, 'w') as f:
+                for i in range(len(self.conv)):
+                    f.write(str(self.conv[i]) + '\n')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
